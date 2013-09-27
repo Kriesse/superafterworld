@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Super After World</title>
+
+    <meta charset="utf-8">
+    <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+
+    <script type="text/javascript" src="physics.min.js"></script>
+    <!--<script type="text/javascript" src="./2D gaming using Processing.js_files/syntaxHighlight.js"></script>-->
+
+
+<!--
+
+    var move_cloud = function()
+    {
+        current_x = current_x + 1;
+        style = "url(graphics/backgrounds/nightsky_fg.gif) repeat-x -" + current_x +"px 0px , url(graphics/backgrounds/nightsky_bg.gif) repeat";
+        $("body").css({background: style});
+    };
+    window.setInterval(move_cloud, 200);
+});
+
+-->
+
+<!--
+background: url(graphics/backgrounds/nightsky_fg.gif) repeat-x -1px 0, url(graphics/backgrounds/nightsky_bg.gif) repeat;
+
+
+-->
+
+    <script type="text/javascript">
+$( document ).ready(function() {
+
+  var bodies = []
+
+  var add_mario = function(){
+    var mario = {x: 400, y: 0};
+
+      // Physics particles
+    var gravity = 0.1; // Occurs in the y-direction, negative y goes up.
+    var physics = new Physics(gravity);
+
+    // Particle variables
+    var particle = physics.makeParticle(0.1, mario.x, mario.y);
+    var radius = 10;
+  };
+
+  $("*").click(function(){
+    console.log("t");
+
+  });
+
+
+});
+    </script>
+
+    <style type="text/css">
+body {
+ background: #000 url(graphics/backgrounds/nightsky_bg.gif) repeat;
+}
+    </style>
+</head>
+<body>
+
+ </body></html>
