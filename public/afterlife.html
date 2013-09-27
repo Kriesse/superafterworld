@@ -10,19 +10,6 @@
 
 
 <!--
-
-    var move_cloud = function()
-    {
-        current_x = current_x + 1;
-        style = "url(graphics/backgrounds/nightsky_fg.gif) repeat-x -" + current_x +"px 0px , url(graphics/backgrounds/nightsky_bg.gif) repeat";
-        $("body").css({background: style});
-    };
-    window.setInterval(move_cloud, 200);
-});
-
--->
-
-<!--
 background: url(graphics/backgrounds/nightsky_fg.gif) repeat-x -1px 0, url(graphics/backgrounds/nightsky_bg.gif) repeat;
 
 
@@ -31,22 +18,26 @@ background: url(graphics/backgrounds/nightsky_fg.gif) repeat-x -1px 0, url(graph
     <script type="text/javascript">
 $( document ).ready(function() {
 
-  var bodies = []
+  var mario_image = new Image();
+  mario_image.src = "graphics/mario/small/Standing-mario.gif";
+
+  var marios = []
+
 
   var add_mario = function(){
-    var mario = {x: 400, y: 0};
+      
+  };
 
-      // Physics particles
-    var gravity = 0.1; // Occurs in the y-direction, negative y goes up.
-    var physics = new Physics(gravity);
-
-    // Particle variables
-    var particle = physics.makeParticle(0.1, mario.x, mario.y);
-    var radius = 10;
+  var redraw = function(){
+    var ctx = document.getElementById('canvas').getContext('2d');
+    for (i in marios) {
+      ctx.drawImage
+    }
   };
 
   $("*").click(function(){
     console.log("t");
+    add_mario();
 
   });
 
@@ -58,8 +49,14 @@ $( document ).ready(function() {
 body {
  background: #000 url(graphics/backgrounds/nightsky_bg.gif) repeat;
 }
+
+canvas {
+  width: 100%;
+  height: 100%;
+}
     </style>
 </head>
 <body>
-
+<cavas id="canvas">
+</canvas>
  </body></html>
