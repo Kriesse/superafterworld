@@ -96,13 +96,21 @@ $(function() {
   // set up physics world
   var worldAABB = new b2AABB();
   worldAABB.minVertex.Set(0, 0);
-  worldAABB.maxVertex.Set(height, width);
+  worldAABB.maxVertex.Set(width, height);
   var gravity = new b2Vec2(0, 300);
   var doSleep = true;
   var world = new b2World(worldAABB, gravity, doSleep);
   // animation speed + ?
   var timeStep = 1.0/60;
   var iteration = 1;
+  // add ground
+  var groundSd = new b2BoxDef();
+  groundSd.extents.Set(width, 50);
+  groundSd.restitution = 0;
+  var groundBd = new b2BodyDef();
+  groundBd.AddShape(groundSd);
+  groundBd.position.Set(0, height);
+  world.CreateBody(groundBd)
 
   var circleSd = new b2CircleDef();
 circleSd.density = 1.0;
@@ -121,9 +129,23 @@ var circleBody = world.CreateBody(circleBd);
 
 
   var add_mario = function(){
-      
+    createBall(world, width / 2, 0);
   };
 
+  function createBall(world, x, y) {
+    var circleSd = new b2CircleDef();
+    circleSd.density = 1.0;
+    circleSd.radius = 20;
+    circleSd.restitution = 0.01;
+    circleSd.friction = 0.8;
+    var circleBd = new b2BodyDef();
+    circleBd.AddShape(circleSd);
+    circleBd.position.Set(x, y);
+    var circleBody = world.CreateBody(circleBd);
+  }
+
+  // draw world and draw shape taken from the demo in the zip file
+  // on the box2d website
   function drawWorld(world, ctx) {
     for (var b = world.m_bodyList; b; b = b.m_next) {
       for (var s = b.GetShapeList(); s != null; s = s.GetNext()) {
@@ -177,20 +199,19 @@ var circleBody = world.CreateBody(circleBd);
     ctx.stroke();
   }
 
-  var redraw = function(){
+  var redraw = function() {
     world.Step(timeStep, iteration);
     for (i in marios) {
  //     ctx.drawImage
     }
-    console.log('hey')
+    ctx.clearRect(0, 0, width, height);
     drawWorld(world, ctx);
     window.requestAnimationFrame(redraw);
   };
 
-  $("*").click(function(){
-    console.log("t");
+  $(window).click(function(e){
     add_mario();
-
+    createBall(world,  e.pageX, e.pageY);
   });
   window.requestAnimationFrame(redraw);
 });
