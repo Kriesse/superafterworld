@@ -88,14 +88,15 @@
     <script type="text/javascript">
 $(function() {
 
+  var last_mario = 31;
   var marios = [];
 
   function add_mario(data){
-    var max = 25;
-    var min = -25;
+    var max = 15;
+    var min = -15;
     // random max near center of screen
     var x = (width / 2) + (Math.random() * (max - min) + min);
-    createMario(world, x, 0, mario_image.width, mario_image.height, data);
+    createMario(world, x, 0, data);
   };
 
   // set up socket.io
@@ -148,9 +149,12 @@ $(function() {
 
   window.images = []
   // more marios
-  for (var i = 0; i < 14; i = i + 1) {
+  for (var i = 0; i <= last_mario; i = i + 1) {
     image = new Image();
-    image.src = "graphics/mario/mariodead/"+i+".png";
+    var extension = ".png";
+    if (i >= 15 && i <= 31)
+      extension = ".gif";
+    image.src = "graphics/mario/mariodead/"+i+extension;
     image.onload = function() {
       marios.push(scaleImage(this, marioScale));
     }
@@ -260,7 +264,9 @@ $(function() {
  }
 
   // physics box thing which will represent dead mario position
-  function createMario(world, x, y, width, height, data) {
+  function createMario(world, x, y, data) {
+    var width =  mario_image.width * marioScale / 2;
+    var height = mario_image.height * marioScale / 2;
     var boxSd = new b2BoxDef();
     // physics settings
     boxSd.density = 1.0;
@@ -395,7 +401,7 @@ $(function() {
 
   // on click marios
   $(window).click(function(e){
-    createMario(world, e.pageX, e.pageY, mario_image.width * marioScale / 2, mario_image.height * marioScale / 2);
+    createMario(world, e.pageX, e.pageY);
     });
 
   // start the whole thing
