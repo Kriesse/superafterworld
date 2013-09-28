@@ -88,7 +88,6 @@
     <script type="text/javascript">
 $(function() {
 
-  var last_mario = 31;
   var marios = [];
 
   function add_mario(data){
@@ -149,18 +148,20 @@ $(function() {
 
   window.images = []
   // more marios
-  for (var i = 0; i <= last_mario; i = i + 1) {
-    image = new Image();
-    var extension = ".png";
-    if (i >= 15 && i <= 31)
-      extension = ".gif";
-    image.src = "graphics/mario/mariodead/"+i+extension;
-    image.onload = function() {
-      marios.push(scaleImage(this, marioScale));
+
+  function add_all_marios(extension) {
+    for (var i = 0; i <= 99; i = i + 1) {
+      image = new Image();
+      image.src = "graphics/mario/mariodead/"+i+extension;
+      image.onload = function() {
+        marios.push(scaleImage(this, marioScale));
+      }
+      window.images[extension+i] = image; // don't let image get gc'ed
+      window.marios = marios;
     }
-    window.images[i] = image; // don't let image get gc'ed
-    window.marios = marios;
   }
+  add_all_marios(".png");
+  add_all_marios(".gif");
 
   // ghost images
   var ghost_image_left = new Image(), ghost_image_right = new Image();
