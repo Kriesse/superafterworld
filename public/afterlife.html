@@ -96,8 +96,6 @@ $(function() {
     createBox(world, x, 0, mario_image.width, mario_image.height);
   };
 
-  add = add_mario
-
   // set up socket.io
   // define add_mario before
   var socket = io.connect();
@@ -108,6 +106,7 @@ $(function() {
   var width = $(window).width();
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
+  var scale = 2;
   $(canvas).attr({
     height: height,
     width: width
@@ -131,10 +130,43 @@ $(function() {
   groundBd.position.Set(0, height);
   world.CreateBody(groundBd)
 
+  // ghetto image loader
+  var ImageLoader = $(document.createElement('div'));
+  ImageLoader.loaded = false;
+
   var mario_image = new Image();
+  var mario_width = 14;
+  var mario_height = 20;
   mario_image.src = "graphics/mario/small/Standing-mario.gif";
+  var mario_canvas;
+  mario_image.onload = function() {
+    mario_canvas = scaleImage(mario_image, scale);
+  }
 
   var marios = []
+
+  // returns a canvas with the scaled image
+  function scaleImage(image, scale) {
+    // Create an offscreen canvas, draw an image to it, and fetch the pixels
+    var offcanvas = document.createElement('canvas');
+    var offtx = offcanvas.getContext('2d');
+    offtx.drawImage(image, 0, 0);
+    var imgData = offtx.getImageData(0,0,image.width,image.height).data;
+    // Draw the zoomed-up pixels to a different canvas context
+    for (var x=0; x < image.width; ++x) {
+      for (var y=0; y < image.height; ++y) {
+        // Find the starting index in the one-dimensional image data
+        var i = (y*image.width + x)*4;
+        var r = imgData[i  ];
+        var g = imgData[i+1];
+        var b = imgData[i+2];
+        var a = imgData[i+3];
+        offtx.fillStyle = "rgba("+r+","+g+","+b+","+(a/255)+")";
+        offtx.fillRect(x*scale,y*scale,scale,scale);
+      }
+    }
+    return offcanvas;
+  }
 
   function createBall(world, x, y) {
     var circleSd = new b2CircleDef();
@@ -175,9 +207,11 @@ $(function() {
     // mario case
     case b2Shape.e_polyShape:
       {
-        var poly = shape;
-        var pos = poly.m_position;
-        ctx.drawImage(mario_image, Math.round(pos.x), Math.round(pos.y));
+        if (mario_canvas) {
+          var poly = shape;
+          var pos = poly.m_position;
+          ctx.drawImage(mario_canvas, Math.round(pos.x), Math.round(pos.y));
+        }
       }
       break;
     // just leaving this here for now
@@ -231,6 +265,10 @@ $(function() {
     </script>
 
 <style type="text/css">
+
+body {
+  image-rendering:-webkit-optimize-contrast;
+}
 
 html, body, .container {
   margin: 0;
