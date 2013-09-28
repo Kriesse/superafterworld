@@ -15,8 +15,12 @@
   {
     window.mario_died = function()
     {
+      var name = $("#player").val();
+      if (name.length > 10) {
+        name = name.substr(0, 10) + "..";
+      }
       window.socket.emit("mario_died",
-        {player: $("#player").val()}
+        {player: name}
       );
     };
     $("#enter_name").css({display: "none"});
@@ -24,6 +28,7 @@
     var game = Processing.getInstanceById("canvas20");
     game.unmute();
     game.loop();
+    $("#canvas20").focus();
   }
   $(function() {
     $("#player").keypress(function(e) {
