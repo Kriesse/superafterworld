@@ -129,7 +129,7 @@ $(function() {
   groundSd.restitution = 0;
   var groundBd = new b2BodyDef();
   groundBd.AddShape(groundSd);
-  groundBd.position.Set(0, height);
+  groundBd.position.Set(0, height-50);
   world.CreateBody(groundBd)
 
   // mario image
@@ -179,7 +179,7 @@ $(function() {
 
 
   // tower image
-  var towerScale = 1.5;
+  var towerScale = 2.5;
   var towerHeight, towerWidth;
   var tower_image = new Image();
   tower_image.src = "graphics/afterlife/pink_TVtower.gif";
@@ -193,7 +193,7 @@ $(function() {
   }
 
   // bahn image
-  var bahnScale = 1.25;
+  var bahnScale = 1.5;
   var bahnHeight, bahnWidth;
   var bahn_image = new Image();
   bahn_image.src = "graphics/afterlife/ubahn.gif";
@@ -263,7 +263,7 @@ $(function() {
   function createTower() {
     var boxSd = new b2BoxDef();
     var pos = {
-      x: width - towerWidth,
+      x: width - towerWidth - 50,
       y: height - towerHeight
     };
     boxSd.extents.Set(towerWidth / 2, towerHeight / 2);
@@ -278,8 +278,8 @@ $(function() {
 
   function drawTower(ctx) {
     if (tower_canvas) {
-      ctx.drawImage(tower_canvas, width - towerWidth,
-          height - towerHeight);
+      ctx.drawImage(tower_canvas, width - towerWidth - 50,
+          height - towerHeight - 50);
     }
   }
 
@@ -293,7 +293,7 @@ $(function() {
     boxSd.extents.Set(bahnWidth, bahnHeight/2);
     var boxBd = new b2BodyDef();
     boxBd.AddShape(boxSd);
-    boxBd.position.Set(0, height - (bahnHeight /2) );
+    boxBd.position.Set(0, height - (bahnHeight /2) -50 );
     boxBd.userData = {
       type: 'bahn'
     };
@@ -303,7 +303,7 @@ $(function() {
   function drawBahn(ctx) {
     if (bahn_canvas) {
       ctx.drawImage(bahn_canvas, 0,
-          height - bahnHeight);
+          height - bahnHeight - 50);
     }
   }
 
@@ -430,7 +430,7 @@ body {
 .foreground {
   background: url(graphics/backgrounds/nightsky_fg.gif) repeat-x;
   background-position: 0 0;
-  opacity: 0.5;
+  opacity: 0.9;
   height: 432px;
   width: 100%;
   position: absolute;
