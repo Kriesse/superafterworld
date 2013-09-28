@@ -46,8 +46,8 @@ body {
   /* Webkit (Chrome 11+) */
   background-image:
     -webkit-radial-gradient(center top, ellipse farthest-corner, rgba(0,0,0,.1) 0%, rgba(0,0,0,1) 100%);
-    background-repeat: no-repeat;
-
+    background-repeat: repeat;
+    background-size: cover;
     font-family: "SuperPlumberBrothers", monospace;
     text-transform: uppercase;
     letter-spacing: 4px;
@@ -58,7 +58,7 @@ body {
   }
   #enter_name {
     margin: 100px auto;
-    width: 700px;
+    width: 95%;
     text-align: center;
     font-size: 48px;
     font-family: "SuperPlumberBrothers", monospace;
@@ -77,9 +77,13 @@ body {
     border: 5px solid #000;
     text-align: center;
     outline: none;
+    color: blue;
+    background: #09044b;
   }
   #enter_name input:focus {
     outline: none;
+    color: blue;
+    border: 5px solid blue;
   }
   #enter_name button {
     font-size: 48px;
@@ -94,10 +98,10 @@ body {
     background: #000;
     color: #FFF;
     letter-spacing: 4px;
-    
+    margin-bottom: 1000px;
   }
   #enter_name button:hover {
-    background: red;
+    background: blue;
   }
 </style>
 
