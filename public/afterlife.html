@@ -93,7 +93,7 @@ $(function() {
     var min = -25;
     // random max near center of screen
     var x = (width / 2) + (Math.random() * (max - min) + min);
-    createBox(world, x, 0, mario_image.width, mario_image.height);
+    createMario(world, x, 0, mario_image.width, mario_image.height);
   };
 
   // set up socket.io
@@ -106,7 +106,8 @@ $(function() {
   var width = $(window).width();
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
-  var scale = 2;
+  // scale of all sprites
+  var scale = 4;
   $(canvas).attr({
     height: height,
     width: width
@@ -130,28 +131,22 @@ $(function() {
   groundBd.position.Set(0, height);
   world.CreateBody(groundBd)
 
-  // ghetto image loader
-  var ImageLoader = $(document.createElement('div'));
-  ImageLoader.loaded = false;
-
+  // load mario image and resize
   var mario_image = new Image();
-  var mario_width = 14;
-  var mario_height = 20;
   mario_image.src = "graphics/mario/small/Standing-mario.gif";
   var mario_canvas;
   mario_image.onload = function() {
     mario_canvas = scaleImage(mario_image, scale);
   }
 
-  var marios = []
-
-  // returns a canvas with the scaled image
+  // returns an offscreen canvas with the scaled image on it
   function scaleImage(image, scale) {
     // Create an offscreen canvas, draw an image to it, and fetch the pixels
     var offcanvas = document.createElement('canvas');
     var offtx = offcanvas.getContext('2d');
     offtx.drawImage(image, 0, 0);
     var imgData = offtx.getImageData(0,0,image.width,image.height).data;
+    offtx.clearRect(0, 0, image.width, image.height);
     // Draw the zoomed-up pixels to a different canvas context
     for (var x=0; x < image.width; ++x) {
       for (var y=0; y < image.height; ++y) {
@@ -168,101 +163,82 @@ $(function() {
     return offcanvas;
   }
 
-  function createBall(world, x, y) {
-    var circleSd = new b2CircleDef();
-    circleSd.density = 1.0;
-    circleSd.radius = 20;
-    circleSd.restitution = 0.01;
-    circleSd.friction = 0.8;
-    var circleBd = new b2BodyDef();
-    circleBd.AddShape(circleSd);
-    circleBd.position.Set(x, y);
-    var circleBody = world.CreateBody(circleBd);
-  }
+  function drawBoundingBox(shape, ctx) {
+        ctx.strokeStyle = '#ff0000';
+        ctx.beginPath();
+      var tV = b2Math.AddVV(shape.m_position, b2Math.b2MulMV(shape.m_R, shape.m_vertices[0]));
+      ctx.moveTo(tV.x, tV.y);
+      for (var i = 0; i < shape.m_vertexCount; i++) {
+        var v = b2Math.AddVV(shape.m_position, b2Math.b2MulMV(shape.m_R, shape.m_vertices[i]));
+        ctx.lineTo(v.x, v.y);
+      }
+      ctx.lineTo(tV.x, tV.y);
+      ctx.stroke()
+ }
 
   // physics box thing which will represent dead mario position
-  function createBox(world, x, y, width, height) {
+  function createMario(world, x, y, width, height) {
     var boxSd = new b2BoxDef();
     boxSd.density = 1.0;
     boxSd.extents.Set(width, height);
     var boxBd = new b2BodyDef();
     boxBd.AddShape(boxSd);
     boxBd.position.Set(x,y);
+    boxBd.userData = {
+      type: 'mario'
+    };
     world.CreateBody(boxBd);
   }
 
-  // draw world and draw shape taken from the demo in the zip file
-  // on the box2d website
+  // iterate through all shapes of all bodies and draw them
+  // also pass in the body to the drawShape function
   function drawWorld(world, ctx) {
     for (var b = world.m_bodyList; b; b = b.m_next) {
       for (var s = b.GetShapeList(); s != null; s = s.GetNext()) {
-        drawShape(s, ctx);
+        drawShape(b, s, ctx);
       }
     }
   }
 
-  function drawShape(shape, ctx) {
-    ctx.strokeStyle = '#ffffff';
-    switch (shape.m_type) {
-    // mario case
-    case b2Shape.e_polyShape:
-      {
+  // all drawing procedures go here
+  // switch on userData.type
+  function drawShape(body, shape, ctx) {
+    var data = body.GetUserData() || {};
+    switch (data.type) {
+      case 'mario':
         if (mario_canvas) {
-          var poly = shape;
-          var pos = poly.m_position;
-          ctx.drawImage(mario_canvas, Math.round(pos.x), Math.round(pos.y));
+          var pos = shape.m_position;
+          var rotation = body.GetRotation();
+          var matrix = body.GetRotationMatrix();
+          ctx.save();
+          ctx.translate(pos.x, pos.y);
+          ctx.rotate(rotation);
+          ctx.translate(-pos.x, -pos.y);
+          ctx.drawImage(mario_canvas,
+              // hack to make image match bounding box dunno
+              Math.round(pos.x - (mario_image.width * scale) / 2),
+              Math.round(pos.y - (mario_image.height * scale) / 2));
+          ctx.restore();
+          //drawBoundingBox(shape, ctx);
         }
-      }
-      break;
-    // just leaving this here for now
-    case b2Shape.e_circleShape:
-      {
-        ctx.beginPath();
-        var circle = shape;
-        var pos = circle.m_position;
-        var r = circle.m_radius;
-        var segments = 16.0;
-        var theta = 0.0;
-        var dtheta = 2.0 * Math.PI / segments;
-        // draw circle
-        ctx.moveTo(pos.x + r, pos.y);
-        for (var i = 0; i < segments; i++) {
-          var d = new b2Vec2(r * Math.cos(theta), r * Math.sin(theta));
-          var v = b2Math.AddVV(pos, d);
-          ctx.lineTo(v.x, v.y);
-          theta += dtheta;
-        }
-        ctx.lineTo(pos.x + r, pos.y);
-    
-        // draw radius
-        ctx.moveTo(pos.x, pos.y);
-        var ax = circle.m_R.col1;
-        var pos2 = new b2Vec2(pos.x + r * ax.x, pos.y + r * ax.y);
-        ctx.lineTo(pos2.x, pos2.y);
-        ctx.stroke();
-      }
       break;
     }
   }
 
-  var redraw = function() {
+  function redraw() {
     world.Step(timeStep, iteration);
-    for (i in marios) {
- //     ctx.drawImage
-    }
     ctx.clearRect(0, 0, width, height);
     drawWorld(world, ctx);
     window.requestAnimationFrame(redraw);
   };
 
+  // on click marios
   $(window).click(function(e){
-    //add_mario();
-    //createBall(world,  e.pageX, e.pageY);
-    createBox(world, e.pageX, e.pageY, mario_image.width, mario_image.height);
+    createMario(world, e.pageX, e.pageY, mario_image.width * scale / 2, mario_image.height * scale / 2);
   });
   window.requestAnimationFrame(redraw);
 });
-    </script>
+</script>
 
 <style type="text/css">
 
