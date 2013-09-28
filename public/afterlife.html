@@ -88,6 +88,8 @@
     <script type="text/javascript">
 $(function() {
 
+  var marios = [];
+
   function add_mario(data){
     var max = 25;
     var min = -25;
@@ -139,9 +141,21 @@ $(function() {
   mario_image.src = "graphics/mario/small/Standing-mario.gif";
   var mario_canvas;
   mario_image.onload = function() {
-    mario_canvas = scaleImage(mario_image, marioScale);
+    marios.push(scaleImage(mario_image, marioScale));
     marioHeight = mario_image.height * marioScale;
     marioWidth = mario_image.width * marioScale;
+  }
+
+  window.images = []
+  // more marios
+  for (var i = 0; i < 14; i = i + 1) {
+    image = new Image();
+    image.src = "graphics/mario/mariodead/"+i+".png";
+    image.onload = function() {
+      marios.push(scaleImage(this, marioScale));
+    }
+    window.images[i] = image; // don't let image get gc'ed
+    window.marios = marios;
   }
 
   // ghost images
@@ -256,7 +270,8 @@ $(function() {
     var boxBd = new b2BodyDef();
     boxBd.AddShape(boxSd);
     boxBd.position.Set(x,y);
-    boxBd.userData = $.extend({player: "mario", type: "mario"}, data);
+    var randomSkin = Math.floor(Math.random() * marios.length)
+    boxBd.userData = $.extend({player: "mario", type: "mario", skin: randomSkin}, data);
     world.CreateBody(boxBd);
   }
 
@@ -323,7 +338,8 @@ $(function() {
     var data = body.GetUserData() || {};
     switch (data.type) {
       case 'mario':
-        if (mario_canvas) {
+        var image = marios[data.skin]
+        if (image) {
           var pos = shape.m_position;
           var rotation = body.GetRotation();
           var matrix = body.GetRotationMatrix();
@@ -335,7 +351,7 @@ $(function() {
           ctx.textAlign = 'center';
           ctx.fillText(data.player, 0, -marioHeight/1.8);
           ctx.translate(-pos.x, -pos.y);
-          ctx.drawImage(mario_canvas,
+          ctx.drawImage(image,
               // makes image match bounding box dunno
               Math.round(pos.x - marioWidth / 2),
               Math.round(pos.y - marioHeight / 2));
