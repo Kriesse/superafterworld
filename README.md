@@ -1,7 +1,8 @@
 superafterworld
 ===============
 
-Super After World
+SUPER AFTER WORLD
+
 Where do your Marios go when they die? To the Super After World. 
 
 When I was a kid I was obsessed with where my fallen Marios went after they died. I imagined them going to an alternate world where they all collected and lived together. This is also the same place that missing socks go. And maybe you.
