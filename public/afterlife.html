@@ -4,19 +4,116 @@
 
     <meta charset="utf-8">
     <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+    <!--=============================-->
+    <!-- Copy this part to your app. -->
+    <!-- START                       -->
+    <!--=============================-->
+    <!-- libs -->
+    <!--[if IE]><script type="text/javascript" src="lib/excanvas.js"></script><![endif]-->
+    <script src="lib/prototype-1.6.0.2.js"></script>
 
-    <script type="text/javascript" src="physics.min.js"></script>
-    <!--<script type="text/javascript" src="./2D gaming using Processing.js_files/syntaxHighlight.js"></script>-->
-
-
-<!--
-background: url(graphics/backgrounds/nightsky_fg.gif) repeat-x -1px 0, url(graphics/backgrounds/nightsky_bg.gif) repeat;
-
-
--->
+    <!-- box2djs -->
+    <script src='js/box2d/common/b2Settings.js'></script>
+    <script src='js/box2d/common/math/b2Vec2.js'></script>
+    <script src='js/box2d/common/math/b2Mat22.js'></script>
+    <script src='js/box2d/common/math/b2Math.js'></script>
+    <script src='js/box2d/collision/b2AABB.js'></script>
+    <script src='js/box2d/collision/b2Bound.js'></script>
+    <script src='js/box2d/collision/b2BoundValues.js'></script>
+    <script src='js/box2d/collision/b2Pair.js'></script>
+    <script src='js/box2d/collision/b2PairCallback.js'></script>
+    <script src='js/box2d/collision/b2BufferedPair.js'></script>
+    <script src='js/box2d/collision/b2PairManager.js'></script>
+    <script src='js/box2d/collision/b2BroadPhase.js'></script>
+    <script src='js/box2d/collision/b2Collision.js'></script>
+    <script src='js/box2d/collision/Features.js'></script>
+    <script src='js/box2d/collision/b2ContactID.js'></script>
+    <script src='js/box2d/collision/b2ContactPoint.js'></script>
+    <script src='js/box2d/collision/b2Distance.js'></script>
+    <script src='js/box2d/collision/b2Manifold.js'></script>
+    <script src='js/box2d/collision/b2OBB.js'></script>
+    <script src='js/box2d/collision/b2Proxy.js'></script>
+    <script src='js/box2d/collision/ClipVertex.js'></script>
+    <script src='js/box2d/collision/shapes/b2Shape.js'></script>
+    <script src='js/box2d/collision/shapes/b2ShapeDef.js'></script>
+    <script src='js/box2d/collision/shapes/b2BoxDef.js'></script>
+    <script src='js/box2d/collision/shapes/b2CircleDef.js'></script>
+    <script src='js/box2d/collision/shapes/b2CircleShape.js'></script>
+    <script src='js/box2d/collision/shapes/b2MassData.js'></script>
+    <script src='js/box2d/collision/shapes/b2PolyDef.js'></script>
+    <script src='js/box2d/collision/shapes/b2PolyShape.js'></script>
+    <script src='js/box2d/dynamics/b2Body.js'></script>
+    <script src='js/box2d/dynamics/b2BodyDef.js'></script>
+    <script src='js/box2d/dynamics/b2CollisionFilter.js'></script>
+    <script src='js/box2d/dynamics/b2Island.js'></script>
+    <script src='js/box2d/dynamics/b2TimeStep.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2ContactNode.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2Contact.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2ContactConstraint.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2ContactConstraintPoint.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2ContactRegister.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2ContactSolver.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2CircleContact.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2Conservative.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2NullContact.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2PolyAndCircleContact.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2PolyContact.js'></script>
+    <script src='js/box2d/dynamics/b2ContactManager.js'></script>
+    <script src='js/box2d/dynamics/b2World.js'></script>
+    <script src='js/box2d/dynamics/b2WorldListener.js'></script>
+    <script src='js/box2d/dynamics/joints/b2JointNode.js'></script>
+    <script src='js/box2d/dynamics/joints/b2Joint.js'></script>
+    <script src='js/box2d/dynamics/joints/b2JointDef.js'></script>
+    <script src='js/box2d/dynamics/joints/b2DistanceJoint.js'></script>
+    <script src='js/box2d/dynamics/joints/b2DistanceJointDef.js'></script>
+    <script src='js/box2d/dynamics/joints/b2Jacobian.js'></script>
+    <script src='js/box2d/dynamics/joints/b2GearJoint.js'></script>
+    <script src='js/box2d/dynamics/joints/b2GearJointDef.js'></script>
+    <script src='js/box2d/dynamics/joints/b2MouseJoint.js'></script>
+    <script src='js/box2d/dynamics/joints/b2MouseJointDef.js'></script>
+    <script src='js/box2d/dynamics/joints/b2PrismaticJoint.js'></script>
+    <script src='js/box2d/dynamics/joints/b2PrismaticJointDef.js'></script>
+    <script src='js/box2d/dynamics/joints/b2PulleyJoint.js'></script>
+    <script src='js/box2d/dynamics/joints/b2PulleyJointDef.js'></script>
+    <script src='js/box2d/dynamics/joints/b2RevoluteJoint.js'></script>
+    <script src='js/box2d/dynamics/joints/b2RevoluteJointDef.js'></script>
+    <!--=============================-->
+    <!-- Copy this part to your app. -->
+    <!-- END                         -->
+    <!--=============================-->
 
     <script type="text/javascript">
-$( document ).ready(function() {
+$(function() {
+
+  // set up canvas
+  var height = $(window).height();
+  var width = $(window).width();
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
+  $(canvas).attr({
+    height: height,
+    width: width
+  });
+  // set up physics world
+  var worldAABB = new b2AABB();
+  worldAABB.minVertex.Set(0, 0);
+  worldAABB.maxVertex.Set(height, width);
+  var gravity = new b2Vec2(0, 300);
+  var doSleep = true;
+  var world = new b2World(worldAABB, gravity, doSleep);
+  // animation speed + ?
+  var timeStep = 1.0/60;
+  var iteration = 1;
+
+  var circleSd = new b2CircleDef();
+circleSd.density = 1.0;
+circleSd.radius = 20;
+circleSd.restitution = 1.0;
+circleSd.friction = 0;
+var circleBd = new b2BodyDef();
+circleBd.AddShape(circleSd);
+circleBd.position.Set(x,y);
+var circleBody = world.CreateBody(circleBd);
 
   var mario_image = new Image();
   mario_image.src = "graphics/mario/small/Standing-mario.gif";
@@ -28,11 +125,67 @@ $( document ).ready(function() {
       
   };
 
-  var redraw = function(){
-    var ctx = document.getElementById('canvas').getContext('2d');
-    for (i in marios) {
-      ctx.drawImage
+  function drawWorld(world, context) {
+    for (var b = world.m_bodyList; b; b = b.m_next) {
+      for (var s = b.GetShapeList(); s != null; s = s.GetNext()) {
+        drawShape(s, context);
+      }
     }
+  }
+
+  function drawShape(shape, ctx) {
+    ctx.strokeStyle = '#ffffff';
+    ctx.beginPath();
+    switch (shape.m_type) {
+    case b2Shape.e_circleShape:
+      {
+        var circle = shape;
+        var pos = circle.m_position;
+        var r = circle.m_radius;
+        var segments = 16.0;
+        var theta = 0.0;
+        var dtheta = 2.0 * Math.PI / segments;
+        // draw circle
+        ctx.moveTo(pos.x + r, pos.y);
+        for (var i = 0; i < segments; i++) {
+          var d = new b2Vec2(r * Math.cos(theta), r * Math.sin(theta));
+          var v = b2Math.AddVV(pos, d);
+          ctx.lineTo(v.x, v.y);
+          theta += dtheta;
+        }
+        ctx.lineTo(pos.x + r, pos.y);
+    
+        // draw radius
+        ctx.moveTo(pos.x, pos.y);
+        var ax = circle.m_R.col1;
+        var pos2 = new b2Vec2(pos.x + r * ax.x, pos.y + r * ax.y);
+        ctx.lineTo(pos2.x, pos2.y);
+      }
+      break;
+    case b2Shape.e_polyShape:
+      {
+        var poly = shape;
+        var tV = b2Math.AddVV(poly.m_position, b2Math.b2MulMV(poly.m_R, poly.m_vertices[0]));
+        ctx.moveTo(tV.x, tV.y);
+        for (var i = 0; i < poly.m_vertexCount; i++) {
+          var v = b2Math.AddVV(poly.m_position, b2Math.b2MulMV(poly.m_R, poly.m_vertices[i]));
+          ctx.lineTo(v.x, v.y);
+        }
+        ctx.lineTo(tV.x, tV.y);
+      }
+      break;
+    }
+    ctx.stroke();
+  }
+
+  var redraw = function(){
+    world.Step(timeStep, iteration);
+    for (i in marios) {
+ //     ctx.drawImage
+    }
+    console.log('hey')
+    drawWorld()
+    window.requestAnimationFrame(redraw);
   };
 
   $("*").click(function(){
@@ -40,6 +193,7 @@ $( document ).ready(function() {
     add_mario();
 
   });
+  window.requestAnimationFrame(redraw);
 
 
 });
