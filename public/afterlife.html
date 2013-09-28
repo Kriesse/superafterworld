@@ -106,12 +106,11 @@ $(function() {
   var width = $(window).width();
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
-  // scale of all sprites
-  var scale = 4;
   $(canvas).attr({
     height: height,
     width: width
   });
+
   // set up physics world
   var worldAABB = new b2AABB();
   worldAABB.minVertex.Set(0, 0);
@@ -119,9 +118,11 @@ $(function() {
   var gravity = new b2Vec2(0, 300);
   var doSleep = true;
   var world = new b2World(worldAABB, gravity, doSleep);
-  // animation speed + ?
+
+  // animation speed + iteration (?)
   var timeStep = 1.0/60;
   var iteration = 1;
+
   // add ground
   var groundSd = new b2BoxDef();
   groundSd.extents.Set(width, 50);
@@ -131,18 +132,38 @@ $(function() {
   groundBd.position.Set(0, height);
   world.CreateBody(groundBd)
 
-  // load mario image and resize
+  // mario image
+  var marioScale = 4;
+  var marioHeight, marioWidth;
   var mario_image = new Image();
   mario_image.src = "graphics/mario/small/Standing-mario.gif";
   var mario_canvas;
   mario_image.onload = function() {
-    mario_canvas = scaleImage(mario_image, scale);
+    mario_canvas = scaleImage(mario_image, marioScale);
+    marioHeight = mario_image.height * marioScale;
+    marioWidth = mario_image.width * marioScale;
   }
 
-  // returns an offscreen canvas with the scaled image on it
+  // tower image
+  var towerScale = 1.5;
+  var towerHeight, towerWidth;
+  var tower_image = new Image();
+  tower_image.src = "graphics/afterlife/pink_TVtower.gif";
+  var tower_canvas;
+  tower_image.onload = function() {
+    tower_canvas = scaleImage(tower_image, towerScale);
+    towerHeight = tower_image.height * towerScale;
+    towerWidth = tower_image.width * towerScale;
+    // create here so we know we've loaded image
+    createTower();
+  }
+
+  // returns an offscreen canvas with the marioScaled image on it
   function scaleImage(image, scale) {
     // Create an offscreen canvas, draw an image to it, and fetch the pixels
     var offcanvas = document.createElement('canvas');
+    offcanvas.width = image.width * scale;
+    offcanvas.height = image.height * scale;
     var offtx = offcanvas.getContext('2d');
     offtx.drawImage(image, 0, 0);
     var imgData = offtx.getImageData(0,0,image.width,image.height).data;
@@ -190,6 +211,30 @@ $(function() {
     world.CreateBody(boxBd);
   }
 
+  function createTower() {
+    var boxSd = new b2BoxDef();
+    var pos = {
+      x: width - towerWidth,
+      y: height - towerHeight
+    };
+    boxSd.density = 1.0;
+    boxSd.extents.Set(towerWidth / 2, towerHeight / 2);
+    var boxBd = new b2BodyDef();
+    boxBd.AddShape(boxSd);
+    boxBd.position.Set(pos.x + towerWidth / 2, pos.y + towerHeight / 2);
+    boxBd.userData = {
+      type: 'tower'
+    };
+    world.CreateBody(boxBd);
+  }
+
+  function drawTower(ctx) {
+    if (tower_canvas) {
+      ctx.drawImage(tower_canvas, width - towerWidth,
+          height - towerHeight);
+    }
+  }
+
   // iterate through all shapes of all bodies and draw them
   // also pass in the body to the drawShape function
   function drawWorld(world, ctx) {
@@ -215,12 +260,15 @@ $(function() {
           ctx.rotate(rotation);
           ctx.translate(-pos.x, -pos.y);
           ctx.drawImage(mario_canvas,
-              // hack to make image match bounding box dunno
-              Math.round(pos.x - (mario_image.width * scale) / 2),
-              Math.round(pos.y - (mario_image.height * scale) / 2));
+              // makes image match bounding box dunno
+              Math.round(pos.x - marioWidth / 2),
+              Math.round(pos.y - marioHeight / 2));
           ctx.restore();
           //drawBoundingBox(shape, ctx);
         }
+      break;
+      case 'tower':
+          //drawBoundingBox(shape, ctx);
       break;
     }
   }
@@ -229,14 +277,18 @@ $(function() {
     world.Step(timeStep, iteration);
     ctx.clearRect(0, 0, width, height);
     drawWorld(world, ctx);
+    drawTower(ctx);
     window.requestAnimationFrame(redraw);
   };
 
   // on click marios
   $(window).click(function(e){
-    createMario(world, e.pageX, e.pageY, mario_image.width * scale / 2, mario_image.height * scale / 2);
-  });
+    createMario(world, e.pageX, e.pageY, mario_image.width * marioScale / 2, mario_image.height * marioScale / 2);
+    });
+
+  // start the whole thing
   window.requestAnimationFrame(redraw);
+
 });
 </script>
 
