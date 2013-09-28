@@ -193,7 +193,7 @@ $(function() {
 
 
   // tower image
-  var towerScale = 2.5;
+  var towerScale = 2.2;
   var towerHeight, towerWidth;
   var tower_image = new Image();
   tower_image.src = "graphics/afterlife/dark-tvtower.png";
@@ -270,20 +270,33 @@ $(function() {
     var boxBd = new b2BodyDef();
     boxBd.AddShape(boxSd);
     boxBd.position.Set(x,y);
-    var randomSkin = Math.floor(Math.random() * marios.length)
-    boxBd.userData = $.extend({player: "mario", type: "mario", skin: randomSkin}, data);
+    var randomSkin = Math.floor(Math.random() * marios.length);
+    boxBd.userData = $.extend({
+      player: "mario",
+      type: "mario",
+      skin: randomSkin
+    }, data);
     world.CreateBody(boxBd);
   }
 
   function createTower() {
-    var boxSd = new b2BoxDef();
     var pos = {
       x: width - towerWidth - 50,
       y: height - towerHeight
     };
-    boxSd.extents.Set(towerWidth / 2, towerHeight / 2);
+
+    // one bounding box for the tall part of the silhouette
+    var boxSd1 = new b2BoxDef();
+    boxSd1.extents.Set(towerWidth / 8, towerHeight / 2);
+
+    // and another one for the 'ball'
+    var boxSd2 = new b2BoxDef();
+    boxSd2.extents.Set(towerWidth/2, towerHeight / 10);
+    boxSd2.localPosition.Set(0, -towerHeight / 15);
+
     var boxBd = new b2BodyDef();
-    boxBd.AddShape(boxSd);
+    boxBd.AddShape(boxSd1);
+    boxBd.AddShape(boxSd2);
     boxBd.position.Set(pos.x + towerWidth / 2, pos.y + towerHeight / 2);
     boxBd.userData = {
       type: 'tower'
