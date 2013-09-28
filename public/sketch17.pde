@@ -423,7 +423,7 @@ class Mario extends Player {
    * When we die, we need to go in the funky "oh no we lost~" dance dive.
    */
   void die() {
-    window.socket.emit("mario_died", {player: "max"});
+    window.mario_died();
     setCurrentState("dead");
     setInteracting(false);
     addImpulse(0,-30);
