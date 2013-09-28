@@ -88,14 +88,16 @@
     <script type="text/javascript">
 $(function() {
 
+  var colors = ["#FF69B4", '#a5fe97', '#00fff7', '#fdf521', '#fdbc21',
+    '#fdd7f9', '#6ba8fc']
   var marios = [];
 
   function add_mario(data){
-    var max = 25;
-    var min = -25;
+    var max = 15;
+    var min = -15;
     // random max near center of screen
     var x = (width / 2) + (Math.random() * (max - min) + min);
-    createMario(world, x, 0, mario_image.width, mario_image.height, data);
+    createMario(world, x, 0, data);
   };
 
   // set up socket.io
@@ -148,15 +150,20 @@ $(function() {
 
   window.images = []
   // more marios
-  for (var i = 0; i < 14; i = i + 1) {
-    image = new Image();
-    image.src = "graphics/mario/mariodead/"+i+".png";
-    image.onload = function() {
-      marios.push(scaleImage(this, marioScale));
+
+  function add_all_marios(extension) {
+    for (var i = 0; i <= 99; i = i + 1) {
+      image = new Image();
+      image.src = "graphics/mario/mariodead/"+i+extension;
+      image.onload = function() {
+        marios.push(scaleImage(this, marioScale));
+      }
+      window.images[extension+i] = image; // don't let image get gc'ed
+      window.marios = marios;
     }
-    window.images[i] = image; // don't let image get gc'ed
-    window.marios = marios;
   }
+  add_all_marios(".png");
+  add_all_marios(".gif");
 
   // ghost images
   var ghost_image_left = new Image(), ghost_image_right = new Image();
@@ -260,7 +267,9 @@ $(function() {
  }
 
   // physics box thing which will represent dead mario position
-  function createMario(world, x, y, width, height, data) {
+  function createMario(world, x, y, data) {
+    var width =  mario_image.width * marioScale / 2;
+    var height = mario_image.height * marioScale / 2;
     var boxSd = new b2BoxDef();
     // physics settings
     boxSd.density = 1.0;
@@ -270,11 +279,13 @@ $(function() {
     var boxBd = new b2BodyDef();
     boxBd.AddShape(boxSd);
     boxBd.position.Set(x,y);
+    var randomColor = Math.floor(Math.random() * colors.length);
     var randomSkin = Math.floor(Math.random() * marios.length);
     boxBd.userData = $.extend({
       player: "mario",
       type: "mario",
-      skin: randomSkin
+      skin: randomSkin,
+      color: randomColor
     }, data);
     world.CreateBody(boxBd);
   }
@@ -351,7 +362,8 @@ $(function() {
     var data = body.GetUserData() || {};
     switch (data.type) {
       case 'mario':
-        var image = marios[data.skin]
+        var image = marios[data.skin];
+        var color = colors[data.color];
         if (image) {
           var pos = shape.m_position;
           var rotation = body.GetRotation();
@@ -360,7 +372,7 @@ $(function() {
           ctx.translate(pos.x, pos.y);
           ctx.rotate(rotation);
           ctx.font = '8px Emulogic ';
-          ctx.fillStyle = "#FF69B4";
+          ctx.fillStyle = color;
           ctx.textAlign = 'center';
           ctx.fillText(data.player, 0, -marioHeight/1.8);
           ctx.translate(-pos.x, -pos.y);
@@ -395,7 +407,7 @@ $(function() {
 
   // on click marios
   $(window).click(function(e){
-    createMario(world, e.pageX, e.pageY, mario_image.width * marioScale / 2, mario_image.height * marioScale / 2);
+    createMario(world, e.pageX, e.pageY);
     });
 
   // start the whole thing
