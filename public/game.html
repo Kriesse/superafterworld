@@ -40,30 +40,35 @@
 }
 
 body {
-  letter-spacing: 4px;
-  background-color: #0a0735;
-  color: #FFF;
-  /* Webkit (Chrome 11+) */
-  background-image:
-    -webkit-radial-gradient(center top, ellipse farthest-corner, rgba(0,0,0,.1) 0%, rgba(0,0,0,1) 100%);
-    background-repeat: repeat;
-    background-size: cover;
-    font-family: "SuperPlumberBrothers", monospace;
-    text-transform: uppercase;
-    letter-spacing: 4px;
+  margin: 0;
+  padding: 0;
   }
   #game {
     display: none;
     top: 1000;
   }
+  #game:focus {
+    outline: none;
+  }
   #enter_name {
-    margin: 100px auto;
-    width: 95%;
+    margin: 0;
+    padding: 100px 0 0 0;
     text-align: center;
     font-size: 48px;
     font-family: "SuperPlumberBrothers", monospace;
     text-transform: uppercase;
     line-height: 2;
+    letter-spacing: 4px;
+    background-color: #0a0735;
+    color: #FFF;
+    /* Webkit (Chrome 11+) */
+    background-image:
+      -webkit-radial-gradient(center top, ellipse farthest-corner, rgba(0,0,0,.1) 0%, rgba(0,0,0,1) 100%);
+    background-repeat: repeat;
+    background-size: cover;
+    font-family: "SuperPlumberBrothers", monospace;
+    text-transform: uppercase;
+    letter-spacing: 4px;
   }
   #enter_name input {
     font-size: 60px;
