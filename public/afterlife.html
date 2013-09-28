@@ -11,6 +11,9 @@
     <!--[if IE]><script type="text/javascript" src="lib/excanvas.js"></script><![endif]-->
     <script src="lib/prototype-1.6.0.2.js"></script>
 
+    <!-- socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
+
     <!-- box2djs -->
     <script src='js/box2d/common/b2Settings.js'></script>
     <script src='js/box2d/common/math/b2Vec2.js'></script>
@@ -85,6 +88,17 @@
     <script type="text/javascript">
 $(function() {
 
+  function add_mario(data){
+    console.log("add mario:", data);
+    createBall(world, width / 2, 0);
+  };
+
+  // set up socket.io
+  // define add_mario before
+  var socket = io.connect();
+  socket.on('add_mario', add_mario);
+
+  // set up canvas
   var height = $(window).height();
   var width = $(window).width();
   var canvas = document.getElementById('canvas');
@@ -126,11 +140,6 @@ var circleBody = world.CreateBody(circleBd);
   mario_image.src = "graphics/mario/small/Standing-mario.gif";
 
   var marios = []
-
-
-  var add_mario = function(){
-    createBall(world, width / 2, 0);
-  };
 
   function createBall(world, x, y) {
     var circleSd = new b2CircleDef();
