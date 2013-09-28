@@ -89,9 +89,14 @@
 $(function() {
 
   function add_mario(data){
-    console.log("add mario:", data);
-    createBox(world, width / 2, 0, mario_image.width, mario_image.height);
+    var max = 25;
+    var min = -25;
+    // random max near center of screen
+    var x = (width / 2) + (Math.random() * (max - min) + min);
+    createBox(world, x, 0, mario_image.width, mario_image.height);
   };
+
+  add = add_mario
 
   // set up socket.io
   // define add_mario before
