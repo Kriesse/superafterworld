@@ -261,11 +261,19 @@ class MainLevelLayer extends LevelLayer {
   // In order to effect "just-in-time" sprite placement,
   // we set up some trigger regions.
   void addTriggers() {
+    addTrigger(new KoopaTrigger(212,0,5,height, 350, height-64, -0.2, 0));
+    addTrigger(new KoopaTrigger(202,0,5,height, 350, height-64, -0.2, 0));
     addTrigger(new KoopaTrigger(412,0,5,height, 350, height-64, -0.2, 0));
+    addTrigger(new KoopaTrigger(432,0,5,height, 350, height-64, -0.2, 0));
     addTrigger(new KoopaTrigger(562,0,5,height, 350, height-64, -0.2, 0));
+    addTrigger(new BanzaiBillTrigger(900,310,5,74, 400, height-84, -6, 0));
+    addTrigger(new KoopaTrigger(575,0,5,height, 350, height-64, -0.2, 0));
+    addTrigger(new KoopaTrigger(585,0,5,height, 350, height-64, -0.2, 0));
     addTrigger(new KoopaTrigger(916,0,5,height, 350, height-64, -0.2, 0));
     // when tripped, release a banzai bill!
-    addTrigger(new BanzaiBillTrigger(1446,310,5,74, 400, height-84, -6, 0));
+    addTrigger(new BanzaiBillTrigger(1646,310,5,74, 400, height-84, -6, 0));
+    addTrigger(new BanzaiBillTrigger(1746,410,5,74, 400, height-84, -6, 0));
+    addTrigger(new BanzaiBillTrigger(1846,310,5,74, 400, height-84, -6, 0));
   }
 
   void draw() {
@@ -641,6 +649,7 @@ class Rope extends MarioPickup {
     SoundManager.stop(getLevelLayer().getLevel());
     // play victory music!
     SoundManager.play(this);
+    window.mario_won();
   }
 }
 
