@@ -21,14 +21,18 @@
     };
     $("#enter_name").css({display: "none"});
     $("#game").css({display: "block", top: 0});
+    var game = Processing.getInstanceById("canvas20");
+    game.unmute();
+    game.loop();
   }
   $(function() {
-  $("#player").keypress(function(e) {
-    var code = (e.keyCode ? e.keyCode : e.which);
-    if(code == 13) { // enter
-      start_game();
-    }
-  });
+    $("#player").keypress(function(e) {
+      var code = (e.keyCode ? e.keyCode : e.which);
+      if(code == 13) { // enter
+        start_game();
+      }
+    });
+    $("#player").focus();
   });
 </script>
 <style type="text/css">
@@ -76,6 +80,7 @@ body {
     letter-spacing: 4px;
     background-color: #0a0735;
     color: #FFF;
+    overflow: hidden;
     /* Webkit (Chrome 11+) */
     background-image:
       -webkit-radial-gradient(center top, ellipse farthest-corner, rgba(0,0,0,.1) 0%, rgba(0,0,0,1) 100%);
