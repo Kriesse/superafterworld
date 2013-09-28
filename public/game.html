@@ -28,13 +28,43 @@
     display: none;
     top: 1000;
   }
+  #enter_name {
+    margin: 100px auto;
+    width: 700px;
+    text-align: center;
+    font-size: 48px;
+    font-family: Courier;
+    line-height: 2;
+  }
+  #enter_name input {
+    font-size: 48px;
+    padding: 10px;
+    font-family: Courier;
+    border-radius: 10px;
+    border: 5px solid red;
+    text-align: center;
+    outline: none;
+  }
+  #enter_name input:focus {
+    outline: none;
+  }
+  #enter_name button {
+    font-size: 48px;
+    padding: 10px;
+    font-family: Courier;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+  }
 </style>
 
 </head>
 <body>
   <div id="enter_name">
     <label>Enter your name:</label>
+    <br>
     <input id="player" type="text">
+    <br>
     <button onclick="start_game()" type="button">Start Game</button>
   </div>
   <div id="game">
