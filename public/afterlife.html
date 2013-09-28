@@ -363,6 +363,15 @@ body {
   background: url(graphics/backgrounds/nightsky_bg.gif) repeat;
 }
 
+.pipe {
+  position: absolute;
+  left: 50%;
+  margin-left: -48px;
+  height: 70px;
+  width: 97px;
+  background-image: url(graphics/afterlife/greentube.gif);
+}
+
 .foreground {
   background: url(graphics/backgrounds/nightsky_fg.gif) repeat-x;
   background-position: 0 0;
@@ -392,6 +401,7 @@ canvas {
 </head>
 <body>
   <div class="container">
+    <div class="pipe"></div>
     <div class="foreground"></div>
     <canvas id="canvas">
     </canvas>
