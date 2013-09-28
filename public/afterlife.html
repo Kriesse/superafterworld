@@ -125,7 +125,7 @@ $(function() {
 
   // add ground
   var groundSd = new b2BoxDef();
-  groundSd.extents.Set(width, 50);
+  groundSd.extents.Set(width, 1);
   groundSd.restitution = 0;
   var groundBd = new b2BodyDef();
   groundBd.AddShape(groundSd);
@@ -364,11 +364,23 @@ body {
 }
 
 .foreground {
-  background: url(graphics/backgrounds/nightsky_fg.gif) repeat-x -1px 0;
+  background: url(graphics/backgrounds/nightsky_fg.gif) repeat-x;
+  background-position: 0 0;
+  opacity: 0.5;
   height: 432px;
   width: 100%;
   position: absolute;
   bottom: 0;
+  -webkit-animation: smoke 50s linear infinite;
+}
+
+@-webkit-keyframes smoke {
+  0% {
+    background-position: 0px 0;
+  }
+  100% {
+    background-position: 511px 0;
+  }
 }
 
 canvas {
