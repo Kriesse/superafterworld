@@ -10,11 +10,34 @@
     <script type="text/javascript" src="canvasFocus.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 <script>
-  window.socket = io.connect('/')
+  window.socket = io.connect('/');
+  function start_game()
+  {
+    window.mario_died = function()
+    {
+      window.socket.emit("mario_died",
+        {player: $("#player").val()}
+      );
+    };
+    $("#enter_name").css({display: "none"});
+    $("#game").css({display: "block", top: 0});
+  }
 </script>
+<style type="text/css">
+  #game {
+    display: none;
+    top: 1000;
+  }
+</style>
 
-
-    <canvas data-processing-sources="codebase.pde preloads.pde sketch17.pde" id="canvas20"></canvas>
-
-
+</head>
+<body>
+  <div id="enter_name">
+    <label>Enter your name:</label>
+    <input id="player" type="text">
+    <button onclick="start_game()" type="button">Start Game</button>
+  </div>
+  <div id="game">
+    <canvas data-processing-sources="codebase.pde preloads.pde sketch17.pde" id="canvas20"/>
+  </div>
  </body></html>
