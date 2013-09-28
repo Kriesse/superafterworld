@@ -93,7 +93,7 @@ $(function() {
     var min = -25;
     // random max near center of screen
     var x = (width / 2) + (Math.random() * (max - min) + min);
-    createMario(world, x, 0, mario_image.width, mario_image.height);
+    createMario(world, x, 0, mario_image.width, mario_image.height, data);
   };
 
   // set up socket.io
@@ -143,6 +143,8 @@ $(function() {
     marioHeight = mario_image.height * marioScale;
     marioWidth = mario_image.width * marioScale;
   }
+
+
 
   // tower image
   var towerScale = 1.5;
@@ -212,7 +214,7 @@ $(function() {
  }
 
   // physics box thing which will represent dead mario position
-  function createMario(world, x, y, width, height) {
+  function createMario(world, x, y, width, height, data) {
     var boxSd = new b2BoxDef();
     // physics settings
     boxSd.density = 1.0;
@@ -222,9 +224,7 @@ $(function() {
     var boxBd = new b2BodyDef();
     boxBd.AddShape(boxSd);
     boxBd.position.Set(x,y);
-    boxBd.userData = {
-      type: 'mario'
-    };
+    boxBd.userData = $.extend({player: "mario", type: "mario"}, data);
     world.CreateBody(boxBd);
   }
 
@@ -302,6 +302,10 @@ $(function() {
           ctx.save();
           ctx.translate(pos.x, pos.y);
           ctx.rotate(rotation);
+          ctx.font = '8px Emulogic ';
+          ctx.fillStyle = "#FF69B4";
+          ctx.textAlign = 'center';
+          ctx.fillText(data.player, 0, -marioHeight/1.8);
           ctx.translate(-pos.x, -pos.y);
           ctx.drawImage(mario_canvas,
               // makes image match bounding box dunno
@@ -341,6 +345,20 @@ $(function() {
 </script>
 
 <style type="text/css">
+
+@font-face {
+    font-family: 'SuperPlumberBrothers';
+    src: url('fonts/Super Plumber Brothers.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Emulogic';
+    src: url('fonts/emulogic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 body {
   image-rendering:-webkit-optimize-contrast;
