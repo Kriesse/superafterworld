@@ -144,16 +144,39 @@ $(function() {
     marioWidth = mario_image.width * marioScale;
   }
 
-  // ghost image
-  var ghostScale = 4;
-  var ghostCanvas, ghostHeight, ghostWidth;
-  var ghostImage = new Image();
-  ghostImage.src = "graphics/enemies/Boo-chasing.gif";
-  ghostImage.onload = function() {
-    ghostCanvas = scaleImage(ghostImage, ghostScale);
-    ghostHeight = ghostImage.height * ghostScale;
-    ghostWidth = ghostImage.width * ghostScale;
+  // ghost images
+  var ghost_image_left = new Image(), ghost_image_right = new Image();
+  var ghost_scale = 5;
+  var ghost_canvas_left, ghost_canvas_right, ghost_width, ghost_height;
+  ghost_image_left.src = "graphics/enemies/Boo-chasing.left.gif";
+  ghost_image_right.src = "graphics/enemies/Boo-chasing.right.gif";
+  ghost_image_left.onload = function() {
+    ghost_canvas_left = scaleImage(ghost_image_left, ghost_scale);
+    ghost_height = ghost_image_left.height * ghost_scale;
+    ghost_width = ghost_image_left.width * ghost_scale;
   }
+  ghost_image_right.onload = function() {
+    ghost_canvas_right = scaleImage(ghost_image_right, ghost_scale);
+  }
+
+  // ghost animations
+  var ghost = {x: 300, x_left: 100, x_right: 500, y: 300, movement: 5};
+  ghost.animate = function(ctx) {
+    this.x = this.x + this.movement;
+    if (this.x < this.x_left || this.x > this.x_right)
+      this.movement = -this.movement;
+    if (this.movement > 0) {
+      if (ghost_canvas_right)
+        ctx.drawImage(ghost_canvas_right, this.x, this.y);
+    } else {
+      if (ghost_canvas_left)
+        ctx.drawImage(ghost_canvas_left, this.x, this.y);
+    }
+  };
+  var ghost2 = $.extend({}, ghost, {x: 1600, x_left: 1500, x_right: 2200, y: 400, movement: -7});
+  var ghost3 = $.extend({}, ghost, {x: 600, x_left: 500, x_right: 1200, y: 1000, movement: -3});
+
+
 
   // tower image
   var towerScale = 1.5;
@@ -335,6 +358,9 @@ $(function() {
     drawWorld(world, ctx);
     drawTower(ctx);
     drawBahn(ctx);
+    ghost.animate(ctx);
+    ghost2.animate(ctx);
+    ghost3.animate(ctx);
     window.requestAnimationFrame(redraw);
   };
 
