@@ -39,7 +39,15 @@
     font-style: normal;
 }
 
-  body {
+body {
+  letter-spacing: 4px;
+  background-color: #0a0735;
+  color: #FFF;
+  /* Webkit (Chrome 11+) */
+  background-image:
+    -webkit-radial-gradient(center top, ellipse farthest-corner, rgba(0,0,0,.1) 0%, rgba(0,0,0,1) 100%);
+    background-repeat: no-repeat;
+
     font-family: "SuperPlumberBrothers", monospace;
     text-transform: uppercase;
     letter-spacing: 4px;
@@ -66,7 +74,7 @@
     letter-spacing: 2px;
 
     border-radius: 10px;
-    border: 5px solid red;
+    border: 5px solid #000;
     text-align: center;
     outline: none;
   }
