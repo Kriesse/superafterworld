@@ -377,13 +377,18 @@ html, body, .container {
 }
 
 body {
-  background-color: black;
+  letter-spacing: 4px;
+  background-color: #0a0735;
+  /* Webkit (Chrome 11+) */
+  background-image:
+    -webkit-radial-gradient(center top, ellipse farthest-corner, rgba(0,0,0,.1) 0%, rgba(0,0,0,1) 100%),
+    url(graphics/backgrounds/nightsky_bg.gif);
+  background-repeat: no-repeat, repeat;
 }
 
 .container {
   position: relative;
   top: 0;
-  background: url(graphics/backgrounds/nightsky_bg.gif) repeat;
 }
 
 .pipe {

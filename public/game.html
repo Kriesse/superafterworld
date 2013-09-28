@@ -24,9 +24,84 @@
   }
 </script>
 <style type="text/css">
+
+@font-face {
+    font-family: 'SuperPlumberBrothers';
+    src: url('fonts/Super Plumber Brothers.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Emulogic';
+    src: url('fonts/emulogic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+  letter-spacing: 4px;
+  background-color: #0a0735;
+  color: #FFF;
+  /* Webkit (Chrome 11+) */
+  background-image:
+    -webkit-radial-gradient(center top, ellipse farthest-corner, rgba(0,0,0,.1) 0%, rgba(0,0,0,1) 100%);
+    background-repeat: repeat;
+    background-size: cover;
+    font-family: "SuperPlumberBrothers", monospace;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+  }
   #game {
     display: none;
     top: 1000;
+  }
+  #enter_name {
+    margin: 100px auto;
+    width: 95%;
+    text-align: center;
+    font-size: 48px;
+    font-family: "SuperPlumberBrothers", monospace;
+    text-transform: uppercase;
+    line-height: 2;
+  }
+  #enter_name input {
+    font-size: 60px;
+    margin-bottom: 50px;
+    padding: 5px 30px 5px;
+    height: 180px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
+    border-radius: 10px;
+    border: 5px solid #000;
+    text-align: center;
+    outline: none;
+    color: blue;
+    background: #09044b;
+  }
+  #enter_name input:focus {
+    outline: none;
+    color: blue;
+    border: 5px solid blue;
+  }
+  #enter_name button {
+    font-size: 48px;
+    padding: 30px 30px 10px;
+    height: 100px;
+    font-family: "SuperPlumberBrothers", monospace;
+    text-transform: uppercase;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: #000;
+    color: #FFF;
+    letter-spacing: 4px;
+    margin-bottom: 1000px;
+  }
+  #enter_name button:hover {
+    background: blue;
   }
 </style>
 
@@ -34,7 +109,9 @@
 <body>
   <div id="enter_name">
     <label>Enter your name:</label>
+    <br>
     <input id="player" type="text">
+    <br>
     <button onclick="start_game()" type="button">Start Game</button>
   </div>
   <div id="game">
