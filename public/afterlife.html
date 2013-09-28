@@ -408,8 +408,10 @@ body {
   /* Webkit (Chrome 11+) */
   background-image:
     -webkit-radial-gradient(center top, ellipse farthest-corner, rgba(0,0,0,.1) 0%, rgba(0,0,0,1) 100%),
+    url(graphics/backgrounds/sky_dark.png),
     url(graphics/backgrounds/nightsky_bg-ani.gif);
-  background-repeat: no-repeat, repeat;
+  background-repeat: no-repeat, repeat-x, repeat;
+  background-position: 0 0, 100% 100%, 0 0;
 }
 
 .container {
