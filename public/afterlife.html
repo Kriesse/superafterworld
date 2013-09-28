@@ -158,6 +158,20 @@ $(function() {
     createTower();
   }
 
+  // bahn image
+  var bahnScale = 1.25;
+  var bahnHeight, bahnWidth;
+  var bahn_image = new Image();
+  bahn_image.src = "graphics/afterlife/ubahn.gif";
+  var bahn_canvas;
+  bahn_image.onload = function() {
+    bahn_canvas = scaleImage(bahn_image, bahnScale);
+    bahnHeight = bahn_image.height * bahnScale;
+    bahnWidth = bahn_image.width * bahnScale;
+    // create here so we know we've loaded image
+    createBahn();
+  }
+
   // returns an offscreen canvas with the marioScaled image on it
   function scaleImage(image, scale) {
     // Create an offscreen canvas, draw an image to it, and fetch the pixels
@@ -200,7 +214,10 @@ $(function() {
   // physics box thing which will represent dead mario position
   function createMario(world, x, y, width, height) {
     var boxSd = new b2BoxDef();
+    // physics settings
     boxSd.density = 1.0;
+    boxSd.restitution = 0;
+    boxSd.friction = 0.5;
     boxSd.extents.Set(width, height);
     var boxBd = new b2BodyDef();
     boxBd.AddShape(boxSd);
@@ -217,7 +234,6 @@ $(function() {
       x: width - towerWidth,
       y: height - towerHeight
     };
-    boxSd.density = 1.0;
     boxSd.extents.Set(towerWidth / 2, towerHeight / 2);
     var boxBd = new b2BodyDef();
     boxBd.AddShape(boxSd);
@@ -232,6 +248,34 @@ $(function() {
     if (tower_canvas) {
       ctx.drawImage(tower_canvas, width - towerWidth,
           height - towerHeight);
+    }
+  }
+
+  function createBahn() {
+    var boxSd = new b2BoxDef();
+    var pos = {
+      x: width - bahnWidth,
+      y: height - bahnHeight
+    };
+    // physics settings
+    // defaults to static body if comment out
+    //boxSd.density = 1.0;
+    //boxSd.restitution = 0;
+    //boxSd.friction = 1;
+    boxSd.extents.Set(bahnWidth / 2, bahnHeight / 2);
+    var boxBd = new b2BodyDef();
+    boxBd.AddShape(boxSd);
+    boxBd.position.Set(pos.x - bahnWidth / 2, height - bahnHeight / 2);
+    boxBd.userData = {
+      type: 'bahn'
+    };
+    world.CreateBody(boxBd);
+  }
+
+  function drawBahn(ctx) {
+    if (bahn_canvas) {
+      ctx.drawImage(bahn_canvas, 0,
+          height - bahnHeight);
     }
   }
 
@@ -270,6 +314,9 @@ $(function() {
       case 'tower':
           //drawBoundingBox(shape, ctx);
       break;
+      case 'bahn':
+          //drawBoundingBox(shape, ctx);
+      break;
     }
   }
 
@@ -278,6 +325,7 @@ $(function() {
     ctx.clearRect(0, 0, width, height);
     drawWorld(world, ctx);
     drawTower(ctx);
+    drawBahn(ctx);
     window.requestAnimationFrame(redraw);
   };
 
