@@ -22,6 +22,14 @@
     $("#enter_name").css({display: "none"});
     $("#game").css({display: "block", top: 0});
   }
+  $(function() {
+  $("#player").keypress(function(e) {
+    var code = (e.keyCode ? e.keyCode : e.which);
+    if(code == 13) { // enter
+      start_game();
+    }
+  });
+  });
 </script>
 <style type="text/css">
 
