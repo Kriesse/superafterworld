@@ -144,7 +144,16 @@ $(function() {
     marioWidth = mario_image.width * marioScale;
   }
 
-
+  // ghost image
+  var ghostScale = 4;
+  var ghostCanvas, ghostHeight, ghostWidth;
+  var ghostImage = new Image();
+  ghostImage.src = "graphics/enemies/Boo-chasing.gif";
+  ghostImage.onload = function() {
+    ghostCanvas = scaleImage(ghostImage, ghostScale);
+    ghostHeight = ghostImage.height * ghostScale;
+    ghostWidth = ghostImage.width * ghostScale;
+  }
 
   // tower image
   var towerScale = 1.5;
@@ -253,19 +262,15 @@ $(function() {
 
   function createBahn() {
     var boxSd = new b2BoxDef();
-    var pos = {
-      x: width - bahnWidth,
-      y: height - bahnHeight
-    };
     // physics settings
     // defaults to static body if comment out
     //boxSd.density = 1.0;
     //boxSd.restitution = 0;
     //boxSd.friction = 1;
-    boxSd.extents.Set(bahnWidth / 2, bahnHeight / 2);
+    boxSd.extents.Set(bahnWidth, bahnHeight/2);
     var boxBd = new b2BodyDef();
     boxBd.AddShape(boxSd);
-    boxBd.position.Set(pos.x - bahnWidth / 2, height - bahnHeight / 2);
+    boxBd.position.Set(0, height - (bahnHeight /2) );
     boxBd.userData = {
       type: 'bahn'
     };
