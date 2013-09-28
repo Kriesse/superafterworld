@@ -3,7 +3,6 @@
     <title>Super After World</title>
 
     <meta charset="utf-8">
-    <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
     <!--=============================-->
     <!-- Copy this part to your app. -->
     <!-- START                       -->
@@ -81,11 +80,11 @@
     <!-- Copy this part to your app. -->
     <!-- END                         -->
     <!--=============================-->
+    <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
 
     <script type="text/javascript">
 $(function() {
 
-  // set up canvas
   var height = $(window).height();
   var width = $(window).width();
   var canvas = document.getElementById('canvas');
@@ -112,7 +111,7 @@ circleSd.restitution = 1.0;
 circleSd.friction = 0;
 var circleBd = new b2BodyDef();
 circleBd.AddShape(circleSd);
-circleBd.position.Set(x,y);
+circleBd.position.Set(0,200);
 var circleBody = world.CreateBody(circleBd);
 
   var mario_image = new Image();
@@ -125,10 +124,10 @@ var circleBody = world.CreateBody(circleBd);
       
   };
 
-  function drawWorld(world, context) {
+  function drawWorld(world, ctx) {
     for (var b = world.m_bodyList; b; b = b.m_next) {
       for (var s = b.GetShapeList(); s != null; s = s.GetNext()) {
-        drawShape(s, context);
+        drawShape(s, ctx);
       }
     }
   }
@@ -184,7 +183,7 @@ var circleBody = world.CreateBody(circleBd);
  //     ctx.drawImage
     }
     console.log('hey')
-    drawWorld()
+    drawWorld(world, ctx);
     window.requestAnimationFrame(redraw);
   };
 
@@ -194,8 +193,6 @@ var circleBody = world.CreateBody(circleBd);
 
   });
   window.requestAnimationFrame(redraw);
-
-
 });
     </script>
 
