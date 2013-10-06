@@ -14,6 +14,12 @@ var socket = app.listen(port, function() {
 });
 
 var io = require('socket.io').listen(socket);
+
+io.configure(function () {
+  io.set("transports", ["xhr-polling"]);
+  io.set("polling duration", 10);
+});
+
 io.sockets.on('connection', function (socket) {
   socket.on('mario_died', function (data) {
     io.sockets.emit('add_mario', data);
