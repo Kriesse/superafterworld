@@ -6,7 +6,7 @@ When I was a kid I was obsessed with where my fallen Marios went after they died
 
 This hack was part of the exhibition Art Hack Day Berlin in September 2013.
 
-![a photo taken during the exhibition](doc/P9282434.jpg)
+![a photo taken during the exhibition](https://github.com/Kriesse/superafterworld/raw/master/doc/P9282434.JPG)
 
 web.js
 ------
