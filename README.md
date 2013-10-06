@@ -1,7 +1,8 @@
 SUPER AFTER WORLD
 =================
-Where do your Marios go when they die? To the [Super After World](http://superafterworld.herokuapp.com/)!
-(note: only tested with Goolge Chrome v29)
+Where do your Marios go when they die? To the Super After World! Oh yeah, it's
+[online](http://superafterworld.herokuapp.com/)
+, though only tested with Goolge Chrome v29.
 
 When I was a kid I was obsessed with where my fallen Marios went after they died. I imagined them going to an alternate world where they all collected and lived together. This is also the same place that missing socks go. And maybe you.
 
