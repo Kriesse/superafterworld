@@ -4,6 +4,10 @@ app.use(express.logger());
 app.use(express.static('public'));
 app.use(app.router);
 
+app.get('/', function(req, res){
+  res.sendfile(__dirname + '/index.html');
+});
+
 var port = process.env.PORT || 5000;
 var socket = app.listen(port, function() {
     console.log("Listening for http on " + port);
