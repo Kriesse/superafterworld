@@ -1,14 +1,14 @@
 SUPER AFTER WORLD
 =================
-Where do your Marios go when they die? To the Super After World! Oh yeah, it's
-[online](http://superafterworld.herokuapp.com/)
-, though only tested with Goolge Chrome v29.
+Where do your Marios go when they die? To the Super After World!
 
 When I was a kid I was obsessed with where my fallen Marios went after they died. I imagined them going to an alternate world where they all collected and lived together. This is also the same place that missing socks go. And maybe you.
 
 This hack was part of the exhibition Art Hack Day Berlin in September 2013.
 
 ![a photo taken during the exhibition](https://github.com/Kriesse/superafterworld/raw/master/doc/P9282434.JPG)
+
+After the exhibition the Super After World moved to the [internet](http://superafterworld.herokuapp.com).
 
 web.js
 ------
