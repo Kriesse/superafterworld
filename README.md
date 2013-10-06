@@ -1,6 +1,7 @@
 SUPER AFTER WORLD
 =================
-Where do your Marios go when they die? To the Super After World. 
+Where do your Marios go when they die? To the [Super After World](http://superafterworld.herokuapp.com/)!
+(note: only tested with Goolge Chrome v29)
 
 When I was a kid I was obsessed with where my fallen Marios went after they died. I imagined them going to an alternate world where they all collected and lived together. This is also the same place that missing socks go. And maybe you.
 
@@ -15,10 +16,10 @@ A node.js script to serve all assets, it also provides websockets which
 allow mario's body to transcend after his death.
 
 Use `npm install` to install all dependencies and start the web server with `node web.js`.
-Afterwards point your Webbrowser (we used Google Chrome v29) to the following urls:
+Afterwards use a html5 capable Webbrowser and go to
+[http://localhost:5000]()
 
-
-[http://localhost:5000/game.html]()
+game.html
 ----------
 The game itself, 99% based on Mike "Pomax"
 Kamermans' excellent
@@ -30,7 +31,7 @@ a gamepad can be used to control the game using
 [ControllerMate 4.7](http://www.orderedbytes.com/controllermate/) and
 the mappings in gamepad_bindings.cmate.
 
-[http://localhost:5000/afterlife.html]()
+afterlife.html
 --------------
 The after world, where failed Marios go. Hacked together in HTML5 &
 JavaScript using the box2d physics engine and a canvas.
