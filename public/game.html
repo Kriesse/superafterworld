@@ -24,7 +24,8 @@
       window.socket.emit("mario_died", {player: player_name()});
     };
     window.mario_won = function() {
-      window.socket.emit("mario_died", {player: player_name(), winner: true});
+      // creates too many duplicate marios
+      // window.socket.emit("mario_died", {player: player_name(), winner: true});
     };
     $("#enter_name").css({display: "none"});
     $("#game").css({display: "block", top: 0});
